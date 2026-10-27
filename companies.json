@@ -1,35 +1,32 @@
 {
   "companies": [
     {
-      "kind": "ip",
-      "ip_last": "Петров",
-      "ip_first": "Сергей",
-      "ip_middle": "Андреевич",
-      "ip_gender": "m",
-      "ip_ogrn": "326770000012345",
-      "ip_ogrn_date": "2026-03-10",
-      "ip_inn": "771234567890",
+      "kind": "ooo",
+      "org_name": "НЖ Групп",
+      "org_ogrn": "1247700592413",
+      "org_inn": "7733453357",
+      "dir_position_gen": "Генерального директора",
+      "dir_fio_gen": "Расулова Фахриддина Ильхамовича",
+      "dir_short": "Расулова Ф. И.",
+      "dir_gender": "m",
       "city": "Москва",
-      "work_address": "125627, г. Москва, ул. Примерная, д. 1",
-      "default_position": "водителя",
-      "next_number": "2026-001",
-      "slug": "petrov"
+      "work_address": "141407, город Москва, км Мкад 73-Й, д. 7",
+      "next_number": "1",
+      "slug": "nzh-grupp"
     },
     {
-      "kind": "ooo",
-      "org_name": "Общество с ограниченной ответственностью «Ромашка»",
-      "org_ogrn": "1027700000000",
-      "org_inn": "7701234567",
-      "org_kpp": "770101001",
-      "dir_position_gen": "генерального директора",
-      "dir_fio_gen": "Ковалёвой Марии Сергеевны",
-      "dir_short": "Ковалёва М. С.",
-      "dir_gender": "f",
+      "kind": "ip",
+      "ip_last": "Камалов",
+      "ip_first": "Шахзодбек",
+      "ip_middle": "Элмурадович",
+      "ip_gender": "m",
+      "ip_ogrn": "326860000060296",
+      "ip_ogrn_date": "2026-09-16",
+      "ip_inn": "861008329286",
       "city": "Москва",
-      "work_address": "115000, г. Москва, ул. Образцовая, д. 7",
-      "default_position": "водителя",
+      "work_address": "125627, г. Москва, км. МКАД 73-й, д. 7",
       "next_number": "1",
-      "slug": "romashka"
+      "slug": "kamalov"
     }
   ]
 }
