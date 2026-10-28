@@ -252,7 +252,7 @@ textarea.code { min-height: 90px; font: 12px/1.4 ui-monospace, Menlo, monospace;
         <label class="field"><span>ИНН</span><input id="ip_inn" inputmode="numeric" placeholder="12 цифр"></label>
       </div>
       <div class="grid" data-for="ooo" style="margin-top:16px" hidden>
-        <label class="field wide"><span>Полное название</span><input id="org_name" placeholder="Общество с ограниченной ответственностью «Ромашка»"></label>
+        <label class="field wide"><span>Название</span><input id="org_name" placeholder="Ромашка"><small>Можно без «ООО» и кавычек: в договоре будет «Общество с ограниченной ответственностью «Ромашка»»</small></label>
         <label class="field"><span>ОГРН</span><input id="org_ogrn" inputmode="numeric" placeholder="13 цифр"></label>
         <label class="field"><span>ИНН</span><input id="org_inn" inputmode="numeric" placeholder="10 цифр"></label>
         <label class="field"><span>КПП <i>если нужен</i></span><input id="org_kpp" inputmode="numeric" placeholder="9 цифр"></label>
@@ -337,6 +337,15 @@ let companies = [];   // то, что видит пользователь (у а
 let current = null;   // выбранная организация
 let docKind = "foreign";
 
+// «ООО Ромашка», "Ромашка", «Общество … «Ромашка»» -> «Общество с ограниченной ответственностью «Ромашка»»
+const OOO_FULL = "Общество с ограниченной ответственностью";
+function orgCore(name) {
+  let n = clean(name).replace(/^общество\s+с\s+ограниченной\s+ответственностью\s*/i, "").replace(/^ООО\s*/i, "");
+  if (/^[«"“„']/.test(n)) { n = n.slice(1); if (/[»"”']$/.test(n)) n = n.slice(0, -1); }
+  n = n.trim();
+  return n;
+}
+const orgFull = name => `${OOO_FULL} «${orgCore(name)}»`;
 function employerParts(c) {
   if (c.kind === "ip") {
     const fem = c.ip_gender === "f";
@@ -350,10 +359,10 @@ function employerParts(c) {
   }
   const kpp = c.org_kpp ? `, КПП ${c.org_kpp}` : "";
   return {
-    title: c.org_name,
+    title: orgFull(c.org_name),
     basis: `ОГРН ${c.org_ogrn}, ИНН ${c.org_inn}${kpp}, в лице ${c.dir_position_gen} ${c.dir_fio_gen}, ${c.dir_gender === "f" ? "действующей" : "действующего"} на основании Устава`,
     sign: c.dir_short,
-    label: c.org_name.replace(/^Общество с ограниченной ответственностью\s*/i, "ООО "),
+    label: `ООО «${orgCore(c.org_name)}»`,
     inn: c.org_inn,
   };
 }
@@ -590,11 +599,17 @@ $("emp-form").addEventListener("change", preview);
 /* ---------- сборка .docx ---------- */
 const xmlEsc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 function b64bytes(b64) { const bin = atob(b64), out = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i); return out; }
+// Общий шаблон берётся из файла templates/trudovoy_dogovor.docx рядом с сайтом.
+// Его можно править в Word и просто заменить файл. Встроенная копия — запасной вариант.
+const DEFAULT_TEMPLATE_URL = "templates/trudovoy_dogovor.docx";
 async function templateBytes(c) {
+  const url = c.template || DEFAULT_TEMPLATE_URL;
+  try {
+    const r = await fetch(url, { cache: "no-store" });
+    if (r.ok) return new Uint8Array(await r.arrayBuffer());
+  } catch (e) {}
   if (!c.template) return b64bytes(DEFAULT_TEMPLATE_B64);
-  const r = await fetch(c.template, { cache: "no-store" });
-  if (!r.ok) throw new Error(`не найден шаблон ${c.template}. Сообщите администратору сайта.`);
-  return new Uint8Array(await r.arrayBuffer());
+  throw new Error(`не найден шаблон ${c.template}. Сообщите администратору сайта.`);
 }
 async function makeDocx(ctx, tpl) {
   const zip = await JSZip.loadAsync(tpl);
