@@ -74,6 +74,7 @@ h1 a { color: inherit; text-decoration: none; }
 
 .chosen { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
 .chosen .who { min-width: 0; }
+.contract-head { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
 .chosen .who span { display: block; font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
 .chosen .who b { font: 700 17px/1.3 var(--font-doc); overflow-wrap: anywhere; }
 
@@ -159,14 +160,24 @@ textarea.code { min-height: 90px; font: 12px/1.4 ui-monospace, Menlo, monospace;
   <section id="view-form" hidden>
     <div class="layout">
       <main class="stack">
-        <section class="panel chosen">
-          <div class="who"><span>Работодатель</span><b id="chosen-name"></b></div>
-          <button type="button" class="btn ghost" id="change-org">Другая организация</button>
-        </section>
-
         <form id="emp-form" class="stack" novalidate>
           <section class="panel">
-            <h2><span class="step">ШАГ 1</span>Сотрудник</h2>
+            <div class="chosen">
+              <div class="who"><span>Работодатель</span><b id="chosen-name"></b></div>
+              <button type="button" class="btn ghost" id="change-org">Другая организация</button>
+            </div>
+            <div class="grid contract-head">
+              <label class="field"><span>Номер договора</span><input id="number"></label>
+              <label class="field"><span>Дата договора и начала работы</span><input id="date" type="date"></label>
+            </div>
+            <dl class="fixed">
+              <div><dt>Должность</dt><dd id="fixed-position"></dd></div>
+              <div><dt>Оклад в месяц</dt><dd id="fixed-salary"></dd></div>
+            </dl>
+          </section>
+
+          <section class="panel">
+            <h2>Сотрудник</h2>
             <p class="sub">Как в паспорте. После скачивания договора данные можно стереть одной кнопкой.</p>
             <div class="grid">
               <label class="field"><span>Фамилия</span><input id="last" autocomplete="off"></label>
@@ -192,19 +203,6 @@ textarea.code { min-height: 90px; font: 12px/1.4 ui-monospace, Menlo, monospace;
               <label class="field"><span>ИНН <i>если есть</i></span><input id="inn" inputmode="numeric" placeholder="12 цифр"></label>
               <label class="field"><span>СНИЛС <i>если есть</i></span><input id="snils" placeholder="123-456-789 01"></label>
             </div>
-          </section>
-
-          <section class="panel">
-            <h2><span class="step">ШАГ 2</span>Условия</h2>
-            <p class="sub">Должность и оклад одинаковые для всех договоров организации и подставляются сами.</p>
-            <div class="grid">
-              <label class="field"><span>Номер договора</span><input id="number"></label>
-              <label class="field"><span>Дата договора и начала работы</span><input id="date" type="date"></label>
-            </div>
-            <dl class="fixed">
-              <div><dt>Должность</dt><dd id="fixed-position"></dd></div>
-              <div><dt>Оклад в месяц</dt><dd id="fixed-salary"></dd></div>
-            </dl>
           </section>
         </form>
       </main>
