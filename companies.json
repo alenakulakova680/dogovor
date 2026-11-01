@@ -253,5 +253,19 @@
       "next_number": "1",
       "slug": "mmg-sever"
     }
+        {
+      "kind": "ip",
+      "ip_last": "Бакыев",
+      "ip_first": "Эркинбек",
+      "ip_gender": "m",
+      "ip_ogrn": "325690000040384",
+      "ip_ogrn_date": "2025-08-05",
+      "ip_inn": "772850076957",
+      "city": "Москва",
+      "work_address": "141407, город Москва, км Мкад 73-Й, д. 7",
+      "default_position": "водителя",
+      "next_number": "1",
+      "slug": "bakyev"
+    }
   ]
 }
