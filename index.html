@@ -188,6 +188,8 @@ textarea.code { min-height: 90px; font: 12px/1.4 ui-monospace, Menlo, monospace;
               <label class="field"><span>Отчество <i>если есть</i></span><input id="middle" autocomplete="off"></label>
               <label class="field"><span>Пол</span><select id="gender"><option value="m">Мужской</option><option value="f">Женский</option></select></label>
               <label class="field"><span>Дата рождения</span><input id="birth_date" type="date"></label>
+              <label class="field"><span>ИНН</span><input id="inn" inputmode="numeric" placeholder="12 цифр" autocomplete="off"></label>
+              <label class="field"><span>СНИЛС</span><input id="snils" placeholder="123-456-789 01" autocomplete="off"></label>
             </div>
             <div class="row" style="margin-top:20px">
               <div class="seg" role="group" aria-label="Гражданство">
@@ -212,8 +214,6 @@ textarea.code { min-height: 90px; font: 12px/1.4 ui-monospace, Menlo, monospace;
             </div>
             <div class="grid">
               <label class="field wide"><span>Адрес регистрации <i>если есть</i></span><input id="address" placeholder="индекс, область, город, улица, дом, квартира"></label>
-              <label class="field"><span>ИНН <i>если есть</i></span><input id="inn" inputmode="numeric" placeholder="12 цифр"></label>
-              <label class="field"><span>СНИЛС <i>если есть</i></span><input id="snils" placeholder="123-456-789 01"></label>
             </div>
           </section>
         </form>
@@ -448,7 +448,7 @@ const RULES = {
   slug: ["req",["re",/^[a-z0-9][a-z0-9-]*$/,"Только латиница, цифры и дефис"]], template: [["re",/^[\w./-]+\.docx$/,"Путь к файлу .docx, например templates/romashka.docx"]],
   last: ["req","name"], first: ["req","name"], middle: ["name"], birth_date: ["req","date"],
   passport_country: ["req"], passport_number: ["req"], doc_date: ["req","date"],
-  migration_date: ["date"], patent_date: ["date"], emp_work_address: ["req"], inn: [["digits",12]], snils: [["re",/^\d{3}-?\d{3}-?\d{3} ?\d{2}$/,"Формат: 123-456-789 01"]],
+  migration_date: ["date"], patent_date: ["date"], emp_work_address: ["req"], inn: ["req",["digits",12]], snils: ["req",["re",/^\d{3}-?\d{3}-?\d{3} ?\d{2}$/,"Формат: 123-456-789 01"]],
   number: ["req"], date: ["req","date"],
 };
 function check(id) {
